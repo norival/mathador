@@ -52,17 +52,17 @@ using namespace std;
 int i, j, k, n;                            //Compteurs
 int reponse;                            //Réponse de l'utilisateur pour le mode de jeu
 
-float    desCible[2],                    //Tableau stockant les résultats des dés cibles
-        cible,                          //Résultat de la cible
-        desNombre[5],                   //Tableau stockant les résultats des dés nombres
-        A, B, C, D, E;                     //Variables intermédiaires stockant les opérations entre plusieurs dés
+float desCible[2],                    //Tableau stockant les résultats des dés cibles
+      cible,                          //Résultat de la cible
+      desNombre[5],                   //Tableau stockant les résultats des dés nombres
+      A, B, C, D, E;                     //Variables intermédiaires stockant les opérations entre plusieurs dés
 
-long double    nMathador = 0;                //Nombre de solutions Mathador pour un tirage
-long double    nSimulationsMathador = 0;    //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
-long double    nSolutions = 0,             //Nombre de solutions
+long double nMathador = 0;                //Nombre de solutions Mathador pour un tirage
+long double nSimulationsMathador = 0;    //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
+long double nSolutions = 0,             //Nombre de solutions
             nSimulations = 0,              //Nombre de simulations (Mode simulation seulement)
             nPositives = 0;              //Nombre de simulations positives (Mode simulation seulement)
-long double    temps_initial,                //Calcul du temps d'exécution du programme
+long double temps_initial,                //Calcul du temps d'exécution du programme
             temps_final,                //
             temps_cpu;                    //
 
@@ -493,6 +493,7 @@ int main()
             {
                 solutionTmp = static_cast<ostringstream*>( &(ostringstream() << desNombre[j]) )->str();
             }
+            stockageSolution(solutionTmp);
         }
 
         //Autres solutions
@@ -525,7 +526,7 @@ int main()
                     A = operation(operateurs[i][j], A, desNombre[j+1]);
                     if (verification33(A) == true)
                     {
-                        solutionTmp = "E";
+                        solutionTmp = "";
                         //Affichage A
                         for (int ii = 0; ii <= j; ii++)
                             solutionTmp += "(";
@@ -586,7 +587,8 @@ int main()
                             E = operation(operateurs[i][j+2], D, B);
                             if (verification33(E) == true)
                             {
-                                solutionTmp = "(";
+                                solutionTmp = "";
+                                solutionTmp += "(";
                                 //Affichage A
                                 for (int ii = 0; ii <= j; ii++)
                                 solutionTmp += "(";
@@ -663,7 +665,8 @@ int main()
                             if (verification33(E) == true)
                             {
                                 //Affichage
-                                solutionTmp ="(";
+                                solutionTmp = "";
+                                solutionTmp += "(";
                                 for (int ii = 0; ii <= j; ii++)
                                     solutionTmp += "(";
 
@@ -755,6 +758,7 @@ int main()
                                     if (ii <= j)
                                         solutionTmp += operateurs[i][ii];
                                 }
+                                solutionTmp += ")";
                                 ///
                                 solutionTmp += operateurs[i][j+2];
                                 //Affichage B
@@ -769,6 +773,7 @@ int main()
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk-1]) )->str();
                                     solutionTmp += ")";
                                 }
+//                                solutionTmp += ")";
                                 stockageSolution(solutionTmp);
                             }
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
@@ -784,7 +789,7 @@ int main()
                                         solutionTmp += "(";
                                     }
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[4]) )->str();
-                                    for (int kk = 4; kk > k; kk--)
+                                    for (int kk = 4; kk >= k; kk--)
                                     {
                                         solutionTmp += operateurs[i][kk-1];
                                         solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk-1]) )->str();
@@ -807,6 +812,7 @@ int main()
                                         if (ii <= j)
                                             solutionTmp += operateurs[i][ii];
                                     }
+                                    solutionTmp += ")";
                                     stockageSolution(solutionTmp);
                                 }
                             }
