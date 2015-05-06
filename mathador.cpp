@@ -1,48 +1,48 @@
 /***********************************************************************************************************************
 *                                                    'TUX MATHADOR'
 *
-*       Auteur      : Xavier Laviron <xavier.laviron@gmx.fr>
-*       Description : Ce programme simule et résoud le jeu 'MATHADOR'
-*                     de Éric Trouillot (http://www.mathador.fr/apropos.html)
-*                     Il y a trois modes de jeu :
-*                         Affichage des soluotions à partir de dés tirés par l'ordinateur
-*                         Affichage des soluotions à partir de dés rentrés par l'utilisateur
-*                         Simulation de n tirages de dés
-*       Projet      : Inititation à la programmation en Licence 3 Biologie des Organismes (Dijon)
-*       Date        : 13 mai 2015
+*   Auteur      : Xavier Laviron <xavier.laviron@gmx.fr>
+*   Description : Ce programme simule et résoud le jeu 'MATHADOR'
+*                 de Éric Trouillot (http://www.mathador.fr/apropos.html)
+*                 Il y a trois modes de jeu :
+*                     Affichage des soluotions à partir de dés tirés par l'ordinateur
+*                     Affichage des soluotions à partir de dés rentrés par l'utilisateur
+*                     Simulation de n tirages de dés
+*   Projet      : Inititation à la programmation en Licence 3 Biologie des Organismes (Dijon)
+*   Date        : 13 mai 2015
 *
 *  Remarques : Le programme est capable d'éliminer une partie des doublons mais pas tous
 *
 *
-*        Tux Mathador is free software: you can redistribute it and/or modify
-*        it under the terms of the GNU General Public License as published by
-*        the Free Software Foundation, either version 3 of the License, or
-*        (at your option) any later version.
+*   Tux Mathador is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
 *
-*        Tux Mathador is distributed in the hope that it will be useful,
-*        but WITHOUT ANY WARRANTY; without even the implied warranty of
-*        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*        GNU General Public License for more details.
+*   Tux Mathador is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
 *
-*        You should have received a copy of the GNU General Public License
-*        along with Tux Mathador.  If not, see <http://www.gnu.org/licenses/>.
+*   You should have received a copy of the GNU General Public License
+*   along with Tux Mathador.  If not, see <http://www.gnu.org/licenses/>.
 *
 ************************************************************************************************************************/
 
 /// Chargement des bibliothèques nécessaires ///
 
-#include <iostream>    //Utilisation des Entrées/Sorties
-#include <stdlib.h>    //Bibliothèque standard : pour utiliser rand()
-#include <string>      //Permet d'utiliser les chaînes de caractères
-#include <algorithm>   //Permet d'utiliser les fonctions next_permutation() et sort()
-#include <iomanip>     //Pour convertir les nombres en caractères
-#include <sstream>     //idem
-#include <vector>      //Pour utiliser les vecteurs
-#include <iomanip>
-#include <ctime>
-#include <math.h>
-#include <float.h>
-    #define EPSILON 1E-6
+#include <iostream>     //Utilisation des Entrées/Sorties
+#include <stdlib.h>     //Bibliothèque standard : pour utiliser rand()
+#include <string>       //Permet d'utiliser les chaînes de caractères
+#include <algorithm>    //Permet d'utiliser les fonctions next_permutation() et sort()
+#include <iomanip>      //Pour convertir les nombres en caractères
+#include <sstream>      //idem
+#include <vector>       //Pour utiliser les vecteurs
+#include <iomanip>      //Pour utiliser setprecision()
+#include <ctime>        //Pour calculer le temps d'exécution du programme
+#include <math.h>       //Pour utiliser fabsf: valeur absolue
+
+#define EPSILON 1E-6    //Pour la comparaison des float
 
 using namespace std;
 
@@ -438,7 +438,6 @@ string constructionGroupement(char chaine)
 }
 
 
-
 int main()
 {
     /*********************************
@@ -449,48 +448,48 @@ int main()
     char reponse;
 
 
-    cout << "                 .88888888:." << endl;
-    cout << "                88888888.88888." << endl;
-    cout << "              .8888888888888888." << endl;
-    cout << "              888888888888888888" << endl;
-    cout << "              88' _`88'_  `88888" << endl;
-    cout << "              88 88 88 88  88888" << endl;
-    cout << "              88_88_::_88_:88888" << endl;
-    cout << "              88:::,::,:::::8888" << endl;
-    cout << "              88`:::::::::'`8888" << endl;
-    cout << "             .88  `::::'    8:88." << endl;
-    cout << "            8888            `8:888." << endl;
-    cout << "          .8888'             `888888." << endl;
-    cout << "         .8888:..  .::.  ...:'8888888:." << endl;
-    cout << "        .8888.'     :'     `'::`88:88888" << endl;
-    cout << "       .8888        '         `.888:8888." << endl;
-    cout << "      888:8         .           888:88888" << endl;
-    cout << "    .888:88        .:           888:88888:" << endl;
-    cout << "    8888888.       ::           88:888888" << endl;
-    cout << "    `.::.888.      ::          .88888888" << endl;
-    cout << "   .::::::.888.    ::         :::`8888'.:." << endl;
-    cout << "  ::::::::::.888   '         .::::::::::::" << endl;
+    cout << "                 .88888888:."                << endl;
+    cout << "                88888888.88888."             << endl;
+    cout << "              .8888888888888888."            << endl;
+    cout << "              888888888888888888"            << endl;
+    cout << "              88' _`88'_  `88888"            << endl;
+    cout << "              88 88 88 88  88888"            << endl;
+    cout << "              88_88_::_88_:88888"            << endl;
+    cout << "              88:::,::,:::::8888"            << endl;
+    cout << "              88`:::::::::'`8888"            << endl;
+    cout << "             .88  `::::'    8:88."           << endl;
+    cout << "            8888            `8:888."         << endl;
+    cout << "          .8888'             `888888."       << endl;
+    cout << "         .8888:..  .::.  ...:'8888888:."     << endl;
+    cout << "        .8888.'     :'     `'::`88:88888"    << endl;
+    cout << "       .8888        '         `.888:8888."   << endl;
+    cout << "      888:8         .           888:88888"   << endl;
+    cout << "    .888:88        .:           888:88888:"  << endl;
+    cout << "    8888888.       ::           88:888888"   << endl;
+    cout << "    `.::.888.      ::          .88888888"    << endl;
+    cout << "   .::::::.888.    ::         :::`8888'.:."  << endl;
+    cout << "  ::::::::::.888   '         .::::::::::::"  << endl;
     cout << "  ::::::::::::.8    '      .:8::::::::::::." << endl;
     cout << " .::::::::::::::.        .:888:::::::::::::" << endl;
-    cout << " :::::::::::::::88:.__..:88888:::::::::::'" << endl;
-    cout << "  `'.:::::::::::88888888888.88:::::::::'" << endl;
-    cout << "     `':::_:' -- '' -'-' `':_::::'`" << endl;
+    cout << " :::::::::::::::88:.__..:88888:::::::::::'"  << endl;
+    cout << "  `'.:::::::::::88888888888.88:::::::::'"    << endl;
+    cout << "     `':::_:' -- '' -'-' `':_::::'`"         << endl;
 
     cout << "********************************************************************************" << endl;
-    cout << "      _____             __  __       _   _               _            " << endl;
-    cout << "     |_   _|   ___  __ |  \\/  | __ _| |_| |__   __ _  __| | ___  _ __ " << endl;
-    cout << "       | || | | \\ \\/ / | |\\/| |/ _` | __| '_ \\ / _` |/ _` |/ _ \\| '__|" << endl;
-    cout << "       | || |_| |>  <  | |  | | (_| | |_| | | | (_| | (_| | (_) | |   " << endl;
-    cout << "       |_| \\__,_/_/\\_\\ |_|  |_|\\__,_|\\__|_| |_|\\__,_|\\__,_|\\___/|_|   " << endl;
+    cout << "      _____             __  __       _   _               _            "           << endl;
+    cout << "     |_   _|   ___  __ |  \\/  | __ _| |_| |__   __ _  __| | ___  _ __ "          << endl;
+    cout << "       | || | | \\ \\/ / | |\\/| |/ _` | __| '_ \\ / _` |/ _` |/ _ \\| '__|"      << endl;
+    cout << "       | || |_| |>  <  | |  | | (_| | |_| | | | (_| | (_| | (_) | |   "           << endl;
+    cout << "       |_| \\__,_/_/\\_\\ |_|  |_|\\__,_|\\__|_| |_|\\__,_|\\__,_|\\___/|_|   "   << endl;
     cout << "********************************************************************************" << endl;
 
     cout << "Bienvenue dans le jeu 'Tux Mathador' ! Adaptation numérique du célèbre jeu de dé." << endl;
-    cout << "Les règles du jeu sont disponibles ici : http://ppfr.it/k0to" << endl;
-    cout << "Je vous propose 3 modes de jeu différents" << endl;
-    cout << "Lequel choisissez-vous ?" << endl;
-    cout << "o: Calcul de solutions à partir de dés tirés par la machine" << endl;
-    cout << "j: Calcul de solutions à partir de dés rentrés par l'utilisateur" << endl;
-    cout << "s: Mode simulation. Calcul de solutions pour n tirages de dés" << endl;
+    cout << "Les règles du jeu sont disponibles ici : http://ppfr.it/k0to"                      << endl;
+    cout << "Je vous propose 3 modes de jeu différents"                                         << endl;
+    cout << "Lequel choisissez-vous ?"                                                          << endl;
+    cout << "o: Calcul de solutions à partir de dés tirés par la machine"                       << endl;
+    cout << "j: Calcul de solutions à partir de dés rentrés par l'utilisateur"                  << endl;
+    cout << "s: Mode simulation. Calcul de solutions pour n tirages de dés"                     << endl;
     do
     {
         cin >> reponse;
@@ -507,7 +506,8 @@ int main()
         cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
         cout << endl;
         cout << "Ce mode permet de calculer le nombre de simulations ayant au moins une réponse pour n simulations" << endl;
-        cout << "Il affiche également la proportion de simulations ayant au moins une solution 'Mathador' (avec tous les opérateurs utilisés)" << endl;
+        cout << "Il affiche également la proportion de simulations ayant au moins une solution 'Mathador'"
+        << "(avec tous les opérateurs utilisés)" << endl;
         cout << "Combien de simulations voulez-vous effectuer ?" << endl;
         cin >> nSimulations;
 //        cout << "Calcul des simulations en cours..." << endl;
@@ -516,14 +516,16 @@ int main()
     n = 0;                 //Initialisation du compteur de simulations
     constructionTableau(); //Construction du tableau de permutations d'opérateurs
 
-    temps_initial = clock ();
+    if (reponse == 's') //Initialisationdu compteur de temps
+        temps_initial = clock();
 
     do
     {
-        /// Cette boucle est répétée tant que le nombre de simulations n'est pas atteint ///
+        /// Cette boucle est répétée tant que le nombre de simulations demandé n'est pas atteint ///
 
         //On tire les dés
         tirageDes(reponse);
+
 
         /// Début des tests ///
 
@@ -574,6 +576,7 @@ int main()
                     B = desNombre[4];
                     for (k = 4; k > j+2; k--)
                     {
+                        //Groupement A.B
                         B = operation(operateurs[i][k-1], B, desNombre[k-1]);
                         C = operation(operateurs[i][j+1], A, B);
                         if (verification(C) == true)
@@ -588,6 +591,7 @@ int main()
 
                         if (k == 4 && j == 0)
                         {
+                            //Groupement (A.De2).B
                             D = operation(operateurs[i][j+1], A, desNombre[2]);
                             E = operation(operateurs[i][j+2], D, B);
                             if (verification(E) == true)
@@ -601,9 +605,9 @@ int main()
                                 solutionTmp += constructionGroupement('B');
                                 stockageSolution(solutionTmp);
                             }
-
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
+                                //Groupement B.(A.De2)
                                 E = operation(operateurs[i][j+2], B, D);
                                 if (verification(E) == true)
                                 {
@@ -619,6 +623,7 @@ int main()
                                 }
                             }
 
+                            //Groupement (A.B).De2
                             D = operation(operateurs[i][j+1], A, B);
                             E = operation(operateurs[i][j+2], D, desNombre[2]);
                             if (verification(E) == true)
@@ -632,9 +637,9 @@ int main()
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                 stockageSolution(solutionTmp);
                             }
-
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
+                                //Groupement De2.(A.B)
                                 E = operation(operateurs[i][j+2], desNombre[2], D);
                                 if (verification(E) == true)
                                 {
@@ -642,7 +647,7 @@ int main()
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                     solutionTmp += operateurs[i][j+2];
                                     solutionTmp += "(";
-                                    solutionTmp += constructionGroupement('A');                                   ///
+                                    solutionTmp += constructionGroupement('A');
                                     solutionTmp += operateurs[i][j+1];
                                     solutionTmp += constructionGroupement('B');
                                     solutionTmp += ")";
@@ -650,6 +655,7 @@ int main()
                                 }
                             }
 
+                            //Groupement (De2.A).B
                             D = operation(operateurs[i][j+1], desNombre[2], A);
                             E = operation(operateurs[i][j+2], D, B);
                             if (verification(E) == true)
@@ -667,6 +673,7 @@ int main()
                             }
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
+                                //Groupement (De2.A).B
                                 E = operation(operateurs[i][j+2], B, D);
                                 if (verification(E) == true)
                                 {
@@ -714,9 +721,11 @@ int main()
 
     } while (n < nSimulations);
 
-
-    temps_final = clock ();
-    temps_cpu = (temps_final - temps_initial) / CLOCKS_PER_SEC * 1;
+    if (reponse == 's')
+    {
+        temps_final = clock ();
+        temps_cpu = (temps_final-temps_initial)/CLOCKS_PER_SEC;
+    }
 
     if (reponse != 's')
     {
@@ -737,5 +746,4 @@ int main()
     }
 
     return 0;
-
 }
