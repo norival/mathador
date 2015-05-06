@@ -299,6 +299,7 @@ void affichageResultats()
     *    Rôles:
     *        Afficher les solutions classées par ordre croissant de points
     ************************************************************************/
+
     bool dejaAffiche1;
     bool dejaAffiche2;
 
@@ -492,8 +493,8 @@ int main()
             if (verification33(desNombre[j]) == true)
             {
                 solutionTmp = static_cast<ostringstream*>( &(ostringstream() << desNombre[j]) )->str();
+                stockageSolution(solutionTmp);
             }
-            stockageSolution(solutionTmp);
         }
 
         //Autres solutions
@@ -526,7 +527,7 @@ int main()
                     A = operation(operateurs[i][j], A, desNombre[j+1]);
                     if (verification33(A) == true)
                     {
-                        solutionTmp = "";
+                        solutionTmp = "1 : ";
                         //Affichage A
                         for (int ii = 0; ii <= j; ii++)
                             solutionTmp += "(";
@@ -551,7 +552,7 @@ int main()
                         C = operation(operateurs[i][j+1], A, B);
                         if (verification33(C) == true)
                         {
-                            solutionTmp = "";
+                            solutionTmp = "2 : ";
                             //Affichage A
                             for (int ii = 0; ii <= j; ii++)
                             solutionTmp += "(";
@@ -587,7 +588,7 @@ int main()
                             E = operation(operateurs[i][j+2], D, B);
                             if (verification33(E) == true)
                             {
-                                solutionTmp = "";
+                                solutionTmp = "3 : ";
                                 solutionTmp += "(";
                                 //Affichage A
                                 for (int ii = 0; ii <= j; ii++)
@@ -625,7 +626,7 @@ int main()
                                 E = operation(operateurs[i][j+2], B, D);
                                 if (verification33(E) == true)
                                 {
-                                    solutionTmp = "";
+                                    solutionTmp = "4 : ";
                                     //Affichage B
                                     for (int kk = k-1; kk < 4; kk++)
                                         solutionTmp += "(";
@@ -665,7 +666,7 @@ int main()
                             if (verification33(E) == true)
                             {
                                 //Affichage
-                                solutionTmp = "";
+                                solutionTmp = "5 : ";
                                 solutionTmp += "(";
                                 for (int ii = 0; ii <= j; ii++)
                                     solutionTmp += "(";
@@ -704,7 +705,7 @@ int main()
 //                                verification(E, 1);
                                 if (verification33(E) == true)
                                 {
-                                    solutionTmp = "";
+                                    solutionTmp = "6 : ";
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                     solutionTmp += operateurs[i][j+2];
                                     solutionTmp += "(";
@@ -720,7 +721,7 @@ int main()
                                         if (ii <= j)
                                             solutionTmp += operateurs[i][ii];
                                     }                                    ///
-                                        solutionTmp += operateurs[i][j+1];
+                                    solutionTmp += operateurs[i][j+1];
                                     //Affichage B
                                     for (int kk = k-1; kk < 4; kk++)
                                         solutionTmp += "(";
@@ -733,15 +734,15 @@ int main()
                                             solutionTmp += operateurs[i][kk-1];
                                     }
                                     solutionTmp += ")";
+                                    stockageSolution(solutionTmp);
                                 }
-                                stockageSolution(solutionTmp);
                             }
 
                             D = operation(operateurs[i][j+1], desNombre[2], A);
                             E = operation(operateurs[i][j+2], D, B);
                             if (verification33(E) == true)
                             {
-                                solutionTmp = "";
+                                solutionTmp = "7 : ";
                                 solutionTmp += "(";
                                 //Affichage Dé2
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
@@ -762,18 +763,17 @@ int main()
                                 ///
                                 solutionTmp += operateurs[i][j+2];
                                 //Affichage B
-                                for (int kk = 4; kk > k; kk--)
+                                for (int kk = 4; kk >= k; kk--)
                                 {
                                     solutionTmp += "(";
                                 }
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[4]) )->str();
-                                for (int kk = 4; kk > k; kk--)
+                                for (int kk = 4; kk >= k; kk--)
                                 {
                                     solutionTmp += operateurs[i][kk-1];
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk-1]) )->str();
                                     solutionTmp += ")";
                                 }
-//                                solutionTmp += ")";
                                 stockageSolution(solutionTmp);
                             }
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
@@ -781,7 +781,7 @@ int main()
                                 E = operation(operateurs[i][j+2], B, D);
                                 if (verification33(E) == true)
                                 {
-                                    solutionTmp = "";
+                                    solutionTmp = "8 : ";
                                     solutionTmp += "(";
                                     //Affichage B
                                     for (int kk = 4; kk > k; kk--)
