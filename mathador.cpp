@@ -78,6 +78,19 @@ vector<int> nPoints(0);                 //Tableau dynamique stockant les points 
 
 float operation(char operateur, float X, float Y)
 {
+    /*******************************************************************************
+    *                       Fonction operation()
+    *   Arguments:
+    *       char operateur: opérateur stocké dans le tableau operateurs[i][j]
+    *       float X: nombre 1
+    *       float Y: nombre 2
+    *
+    *   Rôles:
+    *       Calculer le résultat de X et Y suivant l'opératuer rentré en argument
+    *
+    *   La boucle switch a été trouvée ici : http://ppfr.it/lc2i
+    *******************************************************************************/
+
     float Z;
     switch (operateur)
     {
@@ -101,7 +114,7 @@ float operation(char operateur, float X, float Y)
 
 void tirageDes(char mode)
 {
-    /****************************************************************************
+    /*******************************************************************************
     *                        Fonction tirageDes()
     *    Arguments:
     *        char mode: mode de jeu demandé par l'utilisateur
@@ -110,10 +123,10 @@ void tirageDes(char mode)
     *            s: 's'imulation
     *
     *    Rôles:
-    *        Tirage aléatoire des dés si mode et affichage des dés si mode == 'o'
+    *        Tirage aléatoire des dés si mode != j et affichage des dés si mode == 'o'
     *        Demande les dés à l'utilisateur si mode == 'j'
     *        Tirage aléatoire des dés sans les afficher si mode == 's'
-    ****************************************************************************/
+    *******************************************************************************/
 
     if (mode != 'j')
     {
@@ -121,16 +134,16 @@ void tirageDes(char mode)
         rand();
 
         //Tirage des dés cibles
-        desCible[0] = rand()%5 + 1;          //Tirage du dé des dizaines (dé à 6 faces)
+        desCible[0] = rand()%5 + 1;            //Tirage du dé des dizaines (dé à 6 faces)
         desCible[1] = rand()%10;               //Tirage du dé des unités (dé à 10 faces)
         cible = desCible[0]*10 + desCible[1];
 
         //Tirage des dés de jeu
-        desNombre[0] = rand()%4 + 1;        //Tirage du dé à 4 faces
-        desNombre[1] = rand()%6 + 1;        //Tirage du dé à 6 faces
-        desNombre[2] = rand()%8 + 1;        //Tirage du dé à 8 faces
-        desNombre[3] = rand()%12 + 1;        //Tirage du dé à 12 faces
-        desNombre[4] = rand()%20 + 1;        //Tirage du dé à 20 faces
+        desNombre[0] = rand()%4 + 1;           //Tirage du dé à 4 faces
+        desNombre[1] = rand()%6 + 1;           //Tirage du dé à 6 faces
+        desNombre[2] = rand()%8 + 1;           //Tirage du dé à 8 faces
+        desNombre[3] = rand()%12 + 1;          //Tirage du dé à 12 faces
+        desNombre[4] = rand()%20 + 1;          //Tirage du dé à 20 faces
     }
     if (mode != 's')
     {
@@ -171,12 +184,12 @@ void tirageDes(char mode)
 
 void constructionTableau()
 {
-    /***************************************************************
+    /*******************************************************************************
     *            Fonction constructionTableau()
     *    Rôles:
     *        Construit un tableau de caractères contenant
     *        les 256 permutations possibles des 4 opérateurs
-    ***************************************************************/
+    *******************************************************************************/
 
     /// Colonne 4 ///
     //Fin du tableau: permet d'arrêter les calculs quand 'F' est détecté
@@ -231,7 +244,7 @@ void constructionTableau()
 
 void comptagePoints(string result)
 {
-    /************************************************************************
+    /*******************************************************************************
     *            Fonction comptagePoints()
     *    Arguments:
     *        string result: string temporaire stockant la solution dont il
@@ -240,11 +253,12 @@ void comptagePoints(string result)
     *    Rôles:
     *        Compter les points de la solution stockée dans 'result'
     *        Stocker ces points dans le tableau 'nPoints'
-    *        Addition:         1 point
-    *        Soustraction:    2 points
+    *        Addition:          1 point
+    *        Soustraction:      2 points
     *        Multiplication:    1 point
-    *        Division:        3 points
-    ************************************************************************/
+    *        Division:          3 points
+    *        4 opérateurs:      13 points (Mathador!)
+    *******************************************************************************/
 
     //Initialisation des compteurs
     int points = 0;
@@ -283,22 +297,16 @@ void comptagePoints(string result)
         nMathador++;
     }
 
-    if (addition == false && soustraction == false && multiplication == false && division == false)
-    {
-        //Solution à 1 dé
-        points = 0;
-    }
-
     nPoints.push_back(points);
 }
 
 void affichageResultats()
 {
-    /************************************************************************
+    /*******************************************************************************
     *                    Fonction affichageResultat()
     *    Rôles:
-    *        Afficher les solutions classées par ordre croissant de points
-    ************************************************************************/
+    *        Afficher les solutions en les classant par ordre croissant de points
+    *******************************************************************************/
 
     bool dejaAffiche1;
     bool dejaAffiche2;
@@ -313,6 +321,7 @@ void affichageResultats()
             {
                 if (dejaAffiche1 == false)
                 {
+                    //On affiche le nombre de points une seule fois
                     dejaAffiche1 = true;
                     dejaAffiche2 = true;
                     cout << "Solutions à " << l << " points : " << endl;
@@ -327,6 +336,18 @@ void affichageResultats()
 
 bool verification(float X)
 {
+    /*******************************************************************************
+    *                       Fonction verification()
+    *   Arguments:
+    *       float X: solution à vérifier
+    *   Rôle:
+    *       Vérifie si la solution en cours est égale à la cible
+    *
+    *   fabsf(X-cible) <= EPSILON permet de comparer 2 float
+    *   J'ai fait comme ça car il y avait des problèmes à cause des arrondis
+    *   La solution a été trouvée ici: http://ppfr.it/lc37
+    *******************************************************************************/
+
     if (fabsf(X - cible) <= EPSILON)
         return true;
     else
@@ -335,6 +356,17 @@ bool verification(float X)
 
 void stockageSolution(string solution)
 {
+    /*******************************************************************************
+    *                       Fonction StockageSolution()
+    *   Arguments:
+    *       string solution: chaine de caractères de la solution temporaire
+    *           à stocker
+    *
+    *   Rôles:
+    *       Vérifie si la solution existe déjà dans le vecteur solutions()
+    *       et la stocke dedans si ce n'est pas le cas, et compte les points
+    *******************************************************************************/
+
     bool existe = false;
     solution += "=";
     solution += static_cast<ostringstream*>( &(ostringstream() << cible) )->str();
@@ -361,6 +393,15 @@ void stockageSolution(string solution)
 
 string constructionGroupement(char chaine)
 {
+    /*******************************************************************************
+    *                       Fonction constructionGroupement()
+    *   Arguments:
+    *       char chaine: 'A' ou 'B', construction du groupement A ou B
+    *
+    *   Rôle:
+    *       Construit le groupement A ou B dans une chaine pour l'afficher
+    *******************************************************************************/
+
     string groupement = "";
 
     if (chaine == 'A')
@@ -378,7 +419,6 @@ string constructionGroupement(char chaine)
                 groupement += operateurs[i][ii];
         }
     }
-
     if (chaine == 'B')
     {
         //Affichage B
