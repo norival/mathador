@@ -49,29 +49,29 @@ using namespace std;
 
 /// Déclaration des variables globales ///
 
-int i, j, k, n;                            //Compteurs
+int i, j, k, n;                         //Compteurs
 int reponse;                            //Réponse de l'utilisateur pour le mode de jeu
 
-float desCible[2],                    //Tableau stockant les résultats des dés cibles
-      cible,                          //Résultat de la cible
-      desNombre[5],                   //Tableau stockant les résultats des dés nombres
-      A, B, C, D, E;                     //Variables intermédiaires stockant les opérations entre plusieurs dés
+float desCible[2],                      //Tableau stockant les résultats des dés cibles
+      cible,                            //Résultat de la cible
+      desNombre[5],                     //Tableau stockant les résultats des dés nombres
+      A, B, C, D, E;                    //Variables intermédiaires stockant les opérations entre plusieurs dés
 
-long double nMathador = 0;                //Nombre de solutions Mathador pour un tirage
-long double nSimulationsMathador = 0;    //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
+long double nMathador = 0;              //Nombre de solutions Mathador pour un tirage
+long double nSimulationsMathador = 0;   //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
 long double nSolutions = 0,             //Nombre de solutions
-            nSimulations = 0,              //Nombre de simulations (Mode simulation seulement)
-            nPositives = 0;              //Nombre de simulations positives (Mode simulation seulement)
-long double temps_initial,                //Calcul du temps d'exécution du programme
+            nSimulations = 0,           //Nombre de simulations (Mode simulation seulement)
+            nPositives = 0;             //Nombre de simulations positives (Mode simulation seulement)
+long double temps_initial,              //Calcul du temps d'exécution du programme
             temps_final,                //
-            temps_cpu;                    //
+            temps_cpu;                  //
 
-char operateurs[256][5];                   //tableau[lignes][colonnes] de toutes les permutations des opérateurs
+char operateurs[256][5];                //tableau[lignes][colonnes] de toutes les permutations des opérateurs
 
 string solutionTmp;
 
-vector<string> solutions(0);               //Tableau dynamique stockant toutes les solutions
-vector<int> nPoints(0);                    //Tableau dynamique stockant les points de chaque solution
+vector<string> solutions(0);            //Tableau dynamique stockant toutes les solutions
+vector<int> nPoints(0);                 //Tableau dynamique stockant les points de chaque solution
 
 
 /// Définitions des fonctions ///
@@ -325,7 +325,7 @@ void affichageResultats()
     }
 }
 
-bool verification33(float X)
+bool verification(float X)
 {
     if (fabsf(X - cible) <= EPSILON)
         return true;
@@ -379,7 +379,7 @@ string constructionGroupement(char chaine)
         }
     }
 
-    if (chaine == B)
+    if (chaine == 'B')
     {
         //Affichage B
         for (int kk = k-1; kk < 4; kk++)
@@ -490,7 +490,7 @@ int main()
         //Solutions à 1 dé
         for (j = 0; j <= 4; j++)
         {
-            if (verification33(desNombre[j]) == true)
+            if (verification(desNombre[j]) == true)
             {
                 solutionTmp = static_cast<ostringstream*>( &(ostringstream() << desNombre[j]) )->str();
                 stockageSolution(solutionTmp);
@@ -519,28 +519,14 @@ int main()
             for (i = 0; i <= 255; i++)
             {
                 A = desNombre[0];
-//                solutionTmp = "";
                 for (j = 0; j <= 4; j++)
                 {
                     if (operateurs[i][j] == 'F')
                         break;
                     A = operation(operateurs[i][j], A, desNombre[j+1]);
-                    if (verification33(A) == true)
+                    if (verification(A) == true)
                     {
-                        solutionTmp = "1 : ";
-                        //Affichage A
-                        for (int ii = 0; ii <= j; ii++)
-                            solutionTmp += "(";
-
-                        for (int ii = 0; ii <= j+1; ii++)
-                        {
-                            solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                            if (ii > 0)
-                                solutionTmp += ")";
-                            if (ii <= j)
-                                solutionTmp += operateurs[i][ii];
-                        }
-//                        solutionTmp = constructionGroupement('A');
+                        solutionTmp = constructionGroupement('A');
                         stockageSolution(solutionTmp);
                     }
 
@@ -550,35 +536,13 @@ int main()
                     {
                         B = operation(operateurs[i][k-1], B, desNombre[k-1]);
                         C = operation(operateurs[i][j+1], A, B);
-                        if (verification33(C) == true)
+                        if (verification(C) == true)
                         {
-                            solutionTmp = "2 : ";
-                            //Affichage A
-                            for (int ii = 0; ii <= j; ii++)
-                            solutionTmp += "(";
-
-                            for (int ii = 0; ii <= j+1; ii++)
-                            {
-                                solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                if (ii > 0)
-                                    solutionTmp += ")";
-                                if (ii <= j)
-                                    solutionTmp += operateurs[i][ii];
-                            }
+                            solutionTmp = constructionGroupement('A');
                             ///
                             solutionTmp += operateurs[i][j+1];
                             ///
-                            //Affichage B
-                            for (int kk = k-1; kk < 4; kk++)
-                                solutionTmp += "(";
-                            for (int kk = 4; kk >= k-1; kk--)
-                            {
-                                solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk]) )->str();
-                                if (kk < 4)
-                                    solutionTmp += ")";
-                                if (kk > k-1)
-                                    solutionTmp += operateurs[i][kk-1];
-                            }
+                            solutionTmp += constructionGroupement('B');
                             stockageSolution(solutionTmp);
                         }
 
@@ -586,73 +550,27 @@ int main()
                         {
                             D = operation(operateurs[i][j+1], A, desNombre[2]);
                             E = operation(operateurs[i][j+2], D, B);
-                            if (verification33(E) == true)
+                            if (verification(E) == true)
                             {
-                                solutionTmp = "3 : ";
-                                solutionTmp += "(";
-                                //Affichage A
-                                for (int ii = 0; ii <= j; ii++)
-                                solutionTmp += "(";
-
-                                for (int ii = 0; ii <= j+1; ii++)
-                                {
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                    if (ii > 0)
-                                        solutionTmp += ")";
-                                    if (ii <= j)
-                                        solutionTmp += operateurs[i][ii];
-                                }
-                                //Affichage Dé2
+                                solutionTmp = "(";
+                                solutionTmp += constructionGroupement('A');
                                 solutionTmp += operateurs[i][j+1];
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                 solutionTmp += ")";
                                 solutionTmp += operateurs[i][j+2];
-                                //Affichage B
-                                for (int kk = k-1; kk < 4; kk++)
-                                    solutionTmp += "(";
-                                for (int kk = 4; kk >= k-1; kk--)
-                                {
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk]) )->str();
-                                    if (kk < 4)
-                                        solutionTmp += ")";
-                                    if (kk > k-1)
-                                        solutionTmp += operateurs[i][kk-1];
-                                }
+                                solutionTmp += constructionGroupement('B');
                                 stockageSolution(solutionTmp);
                             }
 
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
                                 E = operation(operateurs[i][j+2], B, D);
-                                if (verification33(E) == true)
+                                if (verification(E) == true)
                                 {
-                                    solutionTmp = "4 : ";
-                                    //Affichage B
-                                    for (int kk = k-1; kk < 4; kk++)
-                                        solutionTmp += "(";
-                                    for (int kk = 4; kk >= k-1; kk--)
-                                    {
-                                        solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk]) )->str();
-                                        if (kk < 4)
-                                            solutionTmp += ")";
-                                        if (kk > k-1)
-                                            solutionTmp += operateurs[i][kk-1];
-                                    }
+                                    solutionTmp = constructionGroupement('B');
                                     solutionTmp += operateurs[i][j+2];
                                     solutionTmp += "(";
-                                    //Affichage A
-                                    for (int ii = 0; ii <= j; ii++)
-                                    solutionTmp += "(";
-
-                                    for (int ii = 0; ii <= j+1; ii++)
-                                    {
-                                        solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                        if (ii > 0)
-                                            solutionTmp += ")";
-                                        if (ii <= j)
-                                            solutionTmp += operateurs[i][ii];
-                                    }
-                                    //Affichage Dé2
+                                    solutionTmp += constructionGroupement('A');
                                     solutionTmp += operateurs[i][j+1];
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                     solutionTmp += ")";
@@ -663,37 +581,13 @@ int main()
 
                             D = operation(operateurs[i][j+1], A, B);
                             E = operation(operateurs[i][j+2], D, desNombre[2]);
-                            if (verification33(E) == true)
+                            if (verification(E) == true)
                             {
-                                //Affichage
-                                solutionTmp = "5 : ";
-                                solutionTmp += "(";
-                                for (int ii = 0; ii <= j; ii++)
-                                    solutionTmp += "(";
-
-                                for (int ii = 0; ii <= j+1; ii++)
-                                {
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                    if (ii > 0)
-                                        solutionTmp += ")";
-                                    if (ii <= j)
-                                        solutionTmp += operateurs[i][ii];
-                                }
-                                ///
+                                solutionTmp = "(";
+                                solutionTmp += constructionGroupement('A');
                                 solutionTmp += operateurs[i][j+1];
-                                //Affichage B
-                                for (int kk = k-1; kk < 4; kk++)
-                                    solutionTmp += "(";
-                                for (int kk = 4; kk >= k-1; kk--)
-                                {
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk]) )->str();
-                                    if (kk < 4)
-                                        solutionTmp += ")";
-                                    if (kk > k-1)
-                                        solutionTmp += operateurs[i][kk-1];
-                                }
+                                solutionTmp += constructionGroupement('B');
                                 solutionTmp += ")";
-                                //Affichage Dé2
                                 solutionTmp += operateurs[i][j+2];
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                 stockageSolution(solutionTmp);
@@ -702,37 +596,15 @@ int main()
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
                                 E = operation(operateurs[i][j+2], desNombre[2], D);
-//                                verification(E, 1);
-                                if (verification33(E) == true)
+                                if (verification(E) == true)
                                 {
-                                    solutionTmp = "6 : ";
+                                    solutionTmp = "";
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                     solutionTmp += operateurs[i][j+2];
                                     solutionTmp += "(";
-                                    //Affichage A
-                                    for (int ii = 0; ii <= j; ii++)
-                                    solutionTmp += "(";
-
-                                    for (int ii = 0; ii <= j+1; ii++)
-                                    {
-                                        solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                        if (ii > 0)
-                                            solutionTmp += ")";
-                                        if (ii <= j)
-                                            solutionTmp += operateurs[i][ii];
-                                    }                                    ///
+                                    solutionTmp += constructionGroupement('A');                                   ///
                                     solutionTmp += operateurs[i][j+1];
-                                    //Affichage B
-                                    for (int kk = k-1; kk < 4; kk++)
-                                        solutionTmp += "(";
-                                    for (int kk = 4; kk >= k-1; kk--)
-                                    {
-                                        solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk]) )->str();
-                                        if (kk < 4)
-                                            solutionTmp += ")";
-                                        if (kk > k-1)
-                                            solutionTmp += operateurs[i][kk-1];
-                                    }
+                                    solutionTmp += constructionGroupement('B');
                                     solutionTmp += ")";
                                     stockageSolution(solutionTmp);
                                 }
@@ -740,78 +612,31 @@ int main()
 
                             D = operation(operateurs[i][j+1], desNombre[2], A);
                             E = operation(operateurs[i][j+2], D, B);
-                            if (verification33(E) == true)
+                            if (verification(E) == true)
                             {
-                                solutionTmp = "7 : ";
-                                solutionTmp += "(";
-                                //Affichage Dé2
+                                solutionTmp = "(";
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                 solutionTmp += operateurs[i][j+1];
-                                //Affichage A
-                                for (int ii = 0; ii <= j; ii++)
-                                solutionTmp += "(";
-
-                                for (int ii = 0; ii <= j+1; ii++)
-                                {
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                    if (ii > 0)
-                                        solutionTmp += ")";
-                                    if (ii <= j)
-                                        solutionTmp += operateurs[i][ii];
-                                }
+                                solutionTmp += constructionGroupement('A');
                                 solutionTmp += ")";
                                 ///
                                 solutionTmp += operateurs[i][j+2];
                                 //Affichage B
-                                for (int kk = 4; kk >= k; kk--)
-                                {
-                                    solutionTmp += "(";
-                                }
-                                solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[4]) )->str();
-                                for (int kk = 4; kk >= k; kk--)
-                                {
-                                    solutionTmp += operateurs[i][kk-1];
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk-1]) )->str();
-                                    solutionTmp += ")";
-                                }
+                                solutionTmp += constructionGroupement('B');
                                 stockageSolution(solutionTmp);
                             }
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
                                 E = operation(operateurs[i][j+2], B, D);
-                                if (verification33(E) == true)
+                                if (verification(E) == true)
                                 {
-                                    solutionTmp = "8 : ";
-                                    solutionTmp += "(";
-                                    //Affichage B
-                                    for (int kk = 4; kk > k; kk--)
-                                    {
-                                        solutionTmp += "(";
-                                    }
-                                    solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[4]) )->str();
-                                    for (int kk = 4; kk >= k; kk--)
-                                    {
-                                        solutionTmp += operateurs[i][kk-1];
-                                        solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[kk-1]) )->str();
-                                        solutionTmp += ")";
-                                    }
+                                    solutionTmp = "(";
+                                    solutionTmp += constructionGroupement('B');
                                     solutionTmp += operateurs[i][j+2];
-                                    //Affichage Dé2
                                     solutionTmp += "(";
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
                                     solutionTmp += operateurs[i][j+1];
-                                    //Affichage A
-                                    for (int ii = 0; ii <= j; ii++)
-                                    solutionTmp += "(";
-
-                                    for (int ii = 0; ii <= j+1; ii++)
-                                    {
-                                        solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[ii]) )->str();
-                                        if (ii > 0)
-                                            solutionTmp += ")";
-                                        if (ii <= j)
-                                            solutionTmp += operateurs[i][ii];
-                                    }
+                                    solutionTmp += constructionGroupement('A');
                                     solutionTmp += ")";
                                     stockageSolution(solutionTmp);
                                 }
