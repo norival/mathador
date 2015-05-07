@@ -11,7 +11,7 @@
 *   Projet      : Inititation à la programmation en Licence 3 Biologie des Organismes (Dijon)
 *   Date        : 13 mai 2015
 *
-*  Remarques : Le programme est capable d'éliminer une partie des doublons mais pas tous
+*   Remarques : Le programme est capable d'éliminer une partie des doublons mais pas tous
 *
 *
 *   Tux Mathador is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ int reponse;                            //Réponse de l'utilisateur pour le mode
 float desCible[2],                      //Tableau stockant les résultats des dés cibles
       cible,                            //Résultat de la cible
       desNombre[5],                     //Tableau stockant les résultats des dés nombres
-      A, B, C, D, E;                    //Variables intermédiaires stockant les opérations entre plusieurs dés
+      A, B, C, D;                       //Variables intermédiaires stockant les opérations entre plusieurs dés
 
 long double nMathador = 0;              //Nombre de solutions Mathador pour un tirage
 long double nSimulationsMathador = 0;   //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
@@ -88,10 +88,11 @@ float operation(char operateur, float X, float Y)
     *   Rôles:
     *       Calculer le résultat de X et Y suivant l'opératuer rentré en argument
     *
-    *   La boucle switch a été trouvée ici : http://ppfr.it/lc2i
+    *   Le switch a été trouvé ici : http://ppfr.it/lc2i
     *******************************************************************************/
 
     float Z;
+
     switch (operateur)
     {
         case '+':
@@ -109,6 +110,7 @@ float operation(char operateur, float X, float Y)
         default:
             break;
     }
+
     return Z;
 }
 
@@ -406,7 +408,6 @@ string constructionGroupement(char chaine)
 
     if (chaine == 'A')
     {
-        //Affichage A
         for (int ii = 0; ii <= j; ii++)
             groupement += "(";
 
@@ -421,7 +422,6 @@ string constructionGroupement(char chaine)
     }
     if (chaine == 'B')
     {
-        //Affichage B
         for (int kk = k-1; kk < 4; kk++)
             groupement += "(";
         for (int kk = 4; kk >= k-1; kk--)
@@ -510,7 +510,6 @@ int main()
         << "(avec tous les opérateurs utilisés)" << endl;
         cout << "Combien de simulations voulez-vous effectuer ?" << endl;
         cin >> nSimulations;
-//        cout << "Calcul des simulations en cours..." << endl;
     }
 
     n = 0;                 //Initialisation du compteur de simulations
@@ -543,16 +542,17 @@ int main()
 
         /*****************************************************************************************
         *                                  ALGORITHME
-        *    La boucle suivante teste toutes les permutations possibles de dés avec toutes les
-        *    permutations possibles d'opérateurs en lisant la succession d'opérateurs dans le
-        *    tableau 'operateurs[ligne][colonne]'
+        *   La boucle suivante teste toutes les permutations possibles de dés avec toutes les
+        *   permutations possibles d'opérateurs en lisant la succession d'opérateurs dans le
+        *   tableau 'operateurs[ligne][colonne]'
+        *   On teste les groupements en repatant dans l'autre sens. Les groupements sont
+        *   enregistrés dans des variables intermédiaires A, B, C et D
+        *   Pour j == 0 et k == 4, on teste également les groupements de 2 blocs de 2 dés,
+        *   puis les groupements de 2 blocs de 2 dés et 1 dé
+        *   Pour j > 0, on teste les groupements en repartant de la fin du tableau de dés
         *
-        *    Pour j == 0, on teste également les groupements de 2 blocs de 2 dés, puis les
-        *    groupements de 2 blocs de 2 dés et 1 dé
-        *    Pour j > 0, on teste les groupements en repartant de la fin du tableau de dés
-        *
-        *    Les permutations possibles des dés sont faites par la fonction next_permutation(),
-        *    qui a été trouvée ici : http://ppfr.it/k09v
+        *   Les permutations possibles des dés sont faites par la fonction next_permutation(),
+        *   qui a été trouvée ici : http://ppfr.it/k09v
         *****************************************************************************************/
 
         sort(desNombre, desNombre+5); //Trie les valeurs des dés pour initialiser les permutations de 'next_permuation'
@@ -592,9 +592,9 @@ int main()
                         if (k == 4 && j == 0)
                         {
                             //Groupement (A.De2).B
-                            D = operation(operateurs[i][j+1], A, desNombre[2]);
-                            E = operation(operateurs[i][j+2], D, B);
-                            if (verification(E) == true)
+                            C = operation(operateurs[i][j+1], A, desNombre[2]);
+                            D = operation(operateurs[i][j+2], C, B);
+                            if (verification(D) == true)
                             {
                                 solutionTmp = "(";
                                 solutionTmp += constructionGroupement('A');
@@ -608,8 +608,8 @@ int main()
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
                                 //Groupement B.(A.De2)
-                                E = operation(operateurs[i][j+2], B, D);
-                                if (verification(E) == true)
+                                D = operation(operateurs[i][j+2], B, C);
+                                if (verification(D) == true)
                                 {
                                     solutionTmp = constructionGroupement('B');
                                     solutionTmp += operateurs[i][j+2];
@@ -624,9 +624,9 @@ int main()
                             }
 
                             //Groupement (A.B).De2
-                            D = operation(operateurs[i][j+1], A, B);
-                            E = operation(operateurs[i][j+2], D, desNombre[2]);
-                            if (verification(E) == true)
+                            C = operation(operateurs[i][j+1], A, B);
+                            D = operation(operateurs[i][j+2], C, desNombre[2]);
+                            if (verification(D) == true)
                             {
                                 solutionTmp = "(";
                                 solutionTmp += constructionGroupement('A');
@@ -640,8 +640,8 @@ int main()
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
                                 //Groupement De2.(A.B)
-                                E = operation(operateurs[i][j+2], desNombre[2], D);
-                                if (verification(E) == true)
+                                D = operation(operateurs[i][j+2], desNombre[2], C);
+                                if (verification(D) == true)
                                 {
                                     solutionTmp = "";
                                     solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
@@ -656,9 +656,9 @@ int main()
                             }
 
                             //Groupement (De2.A).B
-                            D = operation(operateurs[i][j+1], desNombre[2], A);
-                            E = operation(operateurs[i][j+2], D, B);
-                            if (verification(E) == true)
+                            C = operation(operateurs[i][j+1], desNombre[2], A);
+                            D = operation(operateurs[i][j+2], C, B);
+                            if (verification(D) == true)
                             {
                                 solutionTmp = "(";
                                 solutionTmp += static_cast<ostringstream*>( &(ostringstream() << desNombre[2]) )->str();
@@ -674,8 +674,8 @@ int main()
                             if (operateurs[i][j+2] == '-' || operateurs[i][j+2] == '/')
                             {
                                 //Groupement (De2.A).B
-                                E = operation(operateurs[i][j+2], B, D);
-                                if (verification(E) == true)
+                                D = operation(operateurs[i][j+2], B, C);
+                                if (verification(D) == true)
                                 {
                                     solutionTmp = "(";
                                     solutionTmp += constructionGroupement('B');
@@ -691,6 +691,14 @@ int main()
                         }
                     }
                 }
+            }
+
+            if (reponse == 's' && nSolutions > 0 && nMathador > 0)
+            {
+                /*En mode simulation, on arrête la boucle dès qu'on a trouvé
+                au moins une solution et au moins une solution mathador
+                Cela va plus vite */
+                break;
             }
         } while (next_permutation(desNombre, desNombre+5));
 
