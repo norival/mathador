@@ -49,22 +49,22 @@ using namespace std;
 
 /// Déclaration des variables globales ///
 
-int i, j, k, n,                         //Compteurs
-    reponse;                            //Réponse de l'utilisateur pour le mode de jeu
+int i, j, k, n;                         //Compteurs
+int reponse;                            //Réponse de l'utilisateur pour le mode de jeu
 
 float desCible[2],                      //Tableau stockant les résultats des dés cibles
-    cible,                              //Résultat de la cible
-    desNombre[5],                       //Tableau stockant les résultats des dés nombres
-    A, B, C, D;                         //Variables intermédiaires stockant les opérations entre plusieurs dés
+      cible,                            //Résultat de la cible
+      desNombre[5],                     //Tableau stockant les résultats des dés nombres
+      A, B, C, D;                       //Variables intermédiaires stockant les opérations entre plusieurs dés
 
-long double nMathador = 0,              //Nombre de solutions Mathador pour un tirage
-    nSimulationsMathador = 0,           //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
-    nSolutions = 0,                     //Nombre de solutions
-    nSimulations = 0,                   //Nombre de simulations (Mode simulation seulement)
-    nPositives = 0,                     //Nombre de simulations positives (Mode simulation seulement)
-    temps_initial,                      //Calcul du temps d'exécution du programme
-    temps_final,                        //
-    temps_cpu;                          //
+long double nMathador = 0;              //Nombre de solutions Mathador pour un tirage
+long double nSimulationsMathador = 0;   //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
+long double nSolutions = 0,             //Nombre de solutions
+            nSimulations = 0,           //Nombre de simulations (Mode simulation seulement)
+            nPositives = 0;             //Nombre de simulations positives (Mode simulation seulement)
+long double temps_initial,              //Calcul du temps d'exécution du programme
+            temps_final,                //
+            temps_cpu;                  //
 
 char operateurs[256][5];                //tableau[lignes][colonnes] de toutes les permutations des opérateurs
 
@@ -695,7 +695,7 @@ int main()
 
             if (reponse == 's' && nSolutions > 0 && nMathador > 0)
             {
-                /* En mode simulation, on arrête la boucle dès qu'on a trouvé
+                /*En mode simulation, on arrête la boucle dès qu'on a trouvé
                 au moins une solution et au moins une solution mathador
                 Cela va plus vite */
                 break;
