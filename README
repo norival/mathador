@@ -1,0 +1,16 @@
+                ************************************
+                *          Tux Mathador            *
+                ************************************
+        
+Tux Mathador est un petit logiciel développé dans le cadre d'un projet 
+d'informatique en L3 Biologie des Organismes à Dijon.
+
+Il est destiné à mimer le jeu Mathador de Éric Trouillot, en proposant trois
+modes :
+    1. Tirage aléatoire de dés, calcul et affichage de toutes les solutions
+        possibles
+    2. Calcul et affichage des solutions possibles pour des dés rentrés par
+        l'utilisateur
+    3. Simulation d'un nombre n de tirages et calcul d'au moins une solution
+        pour chaque tirage
+
