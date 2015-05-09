@@ -691,13 +691,16 @@ int main()
                         }
                     }
                 }
+                if (reponse == 's' && nSolutions > 0 && nMathador > 0)
+                {
+                    /* En mode simulation, on arrête la boucle dès qu'on a trouvé
+                    au moins une solution et au moins une solution mathador
+                    Cela va plus vite */
+                    break;
+                }
             }
-
             if (reponse == 's' && nSolutions > 0 && nMathador > 0)
             {
-                /* En mode simulation, on arrête la boucle dès qu'on a trouvé
-                au moins une solution et au moins une solution mathador
-                Cela va plus vite */
                 break;
             }
         } while (next_permutation(desNombre, desNombre+5));
