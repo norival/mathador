@@ -62,9 +62,9 @@ long double nMathador = 0,              //Nombre de solutions Mathador pour un t
     nSolutions = 0,                     //Nombre de solutions
     nSimulations = 0,                   //Nombre de simulations (Mode simulation seulement)
     nPositives = 0,                     //Nombre de simulations positives (Mode simulation seulement)
-    temps_initial,                      //Calcul du temps d'exécution du programme
-    temps_final,                        //
-    temps_cpu;                          //
+    tempsInitial,                       //Calcul du temps d'exécution du programme
+    tempsFinal,                         //
+    tempsCpu;                           //
 
 char operateurs[256][5];                //tableau[lignes][colonnes] de toutes les permutations des opérateurs
 
@@ -515,8 +515,13 @@ int main()
     n = 0;                 //Initialisation du compteur de simulations
     constructionTableau(); //Construction du tableau de permutations d'opérateurs
 
-    if (reponse == 's') //Initialisationdu compteur de temps
-        temps_initial = clock();
+    if (reponse == 's')
+    {
+        /* Initialisationdu compteur de temps
+        Permet de calculer le temps d'exécution du programme en mode simulation
+        Code trouvé ici: http://ppfr.it/lo0j */
+        tempsInitial = clock();
+    }
 
     do
     {
@@ -734,8 +739,9 @@ int main()
 
     if (reponse == 's')
     {
-        temps_final = clock ();
-        temps_cpu = (temps_final-temps_initial)/CLOCKS_PER_SEC;
+        //Calcul du temps d'exécution
+        tempsFinal = clock ();
+        tempsCpu = (tempsFinal-tempsInitial)/CLOCKS_PER_SEC;
     }
 
     if (reponse != 's')
@@ -747,8 +753,8 @@ int main()
 
     if (reponse == 's')
     {
-        cout << nSimulations << " simulations effectuées en " << temps_cpu << " secondes ("
-        << nSimulations/temps_cpu << " simulations/seconde)" << endl;
+        cout << nSimulations << " simulations effectuées en " << tempsCpu << " secondes ("
+        << nSimulations/tempsCpu << " simulations/seconde)" << endl;
         cout << "Il y a eu " << nPositives << " simulations avec au moins une solution sur " << nSimulations
         << " simulations (" << nPositives*100/nSimulations << " %)" << endl;
 
