@@ -5,8 +5,8 @@
 *   Description : Ce programme simule et résoud le jeu 'MATHADOR'
 *                 de Éric Trouillot (http://www.mathador.fr/apropos.html)
 *                 Il y a trois modes de jeu :
-*                     Affichage des soluotions à partir de dés tirés par l'ordinateur
-*                     Affichage des soluotions à partir de dés rentrés par l'utilisateur
+*                     Affichage des solutions à partir de dés tirés par l'ordinateur
+*                     Affichage des solutions à partir de dés rentrés par l'utilisateur
 *                     Simulation de n tirages de dés
 *   Projet      : Inititation à la programmation en Licence 3 Biologie des Organismes (Dijon)
 *   Date        : 13 mai 2015
@@ -68,7 +68,7 @@ long double nMathador = 0,              //Nombre de solutions Mathador pour un t
 
 char operateurs[256][5];                //tableau[lignes][colonnes] de toutes les permutations des opérateurs
 
-string solutionTmp;
+string solutionTmp;                     //String temporaire pour construire l'affichage de la solution
 
 vector<string> solutions(0);            //Tableau dynamique stockant toutes les solutions
 vector<int> nPoints(0);                 //Tableau dynamique stockant les points de chaque solution
@@ -86,7 +86,7 @@ float operation(char operateur, float X, float Y)
     *       float Y: nombre 2
     *
     *   Rôles:
-    *       Calculer le résultat de X et Y suivant l'opératuer rentré en argument
+    *       Calculer le résultat de X et Y suivant l'opérateur rentré en argument
     *
     *   Le switch a été trouvé ici : http://ppfr.it/lc2i
     *******************************************************************************/
@@ -247,7 +247,7 @@ void constructionTableau()
 void comptagePoints(string result)
 {
     /*******************************************************************************
-    *            Fonction comptagePoints()
+    *                       Fonction comptagePoints()
     *    Arguments:
     *        string result: string temporaire stockant la solution dont il
     *            faut compter les points
@@ -370,7 +370,11 @@ void stockageSolution(string solution)
     *******************************************************************************/
 
     bool existe = false;
+
     solution += "=";
+    /* Cette ligne de code permet de convertir un nombre en string pour
+       pouvoir le stocker dans le tableau de solutions
+       Code trouvé ici : http://ppfr.it/kih8 */
     solution += static_cast<ostringstream*>( &(ostringstream() << cible) )->str();
 
     /// Vérification si la solution existe déjà dans le tableau 'solutions' ///
@@ -487,8 +491,8 @@ int main()
     cout << "Les règles du jeu sont disponibles ici : http://ppfr.it/k0to"                      << endl;
     cout << "Je vous propose 3 modes de jeu différents"                                         << endl;
     cout << "Lequel choisissez-vous ?"                                                          << endl;
-    cout << "o: Calcul de solutions à partir de dés tirés par la machine"                       << endl;
-    cout << "j: Calcul de solutions à partir de dés rentrés par l'utilisateur"                  << endl;
+    cout << "o: Calcul de solutions à partir de dés tirés par l'ordinateur"                     << endl;
+    cout << "j: Calcul de solutions à partir de dés rentrés par le joueur"                      << endl;
     cout << "s: Mode simulation. Calcul de solutions pour n tirages de dés"                     << endl;
     do
     {
@@ -518,8 +522,8 @@ int main()
     if (reponse == 's')
     {
         /* Initialisationdu compteur de temps
-        Permet de calculer le temps d'exécution du programme en mode simulation
-        Code trouvé ici: http://ppfr.it/lo0j */
+           Permet de calculer le temps d'exécution du programme en mode simulation
+           Code trouvé ici: http://ppfr.it/lo0j */
         tempsInitial = clock();
     }
 
@@ -695,8 +699,8 @@ int main()
                 if (reponse == 's' && nSolutions > 0 && nMathador > 0)
                 {
                     /* En mode simulation, on arrête la boucle dès qu'on a trouvé
-                    au moins une solution et au moins une solution mathador
-                    Cela va plus vite */
+                       au moins une solution et au moins une solution mathador
+                       Cela va plus vite */
                     break;
                 }
             }
@@ -713,8 +717,8 @@ int main()
             if (nSolutions > 0)
             {
                 /* S'il y a au moins une solution, en mode simulation, on incrémente le
-                compteur de simulations positives et on remet le compteur de solutions
-                à zéro pour la simulation d'après */
+                   compteur de simulations positives et on remet le compteur de solutions
+                   à zéro pour la simulation d'après */
                 nSolutions = 0;
                 nPositives++;
 
