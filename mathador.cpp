@@ -587,9 +587,7 @@ int main()
                         if (verification(C) == true)
                         {
                             solutionTmp = constructionGroupement('A');
-                            ///
                             solutionTmp += operateurs[i][j+1];
-                            ///
                             solutionTmp += constructionGroupement('B');
                             stockageSolution(solutionTmp);
                         }
@@ -670,9 +668,7 @@ int main()
                                 solutionTmp += operateurs[i][j+1];
                                 solutionTmp += constructionGroupement('A');
                                 solutionTmp += ")";
-                                ///
                                 solutionTmp += operateurs[i][j+2];
-                                //Affichage B
                                 solutionTmp += constructionGroupement('B');
                                 stockageSolution(solutionTmp);
                             }
