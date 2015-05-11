@@ -11,7 +11,8 @@
 *   Projet      : Inititation à la programmation en Licence 3 Biologie des Organismes (Dijon)
 *   Date        : 13 mai 2015
 *
-*   Remarques : Le programme est capable d'éliminer une partie des doublons mais pas tous
+*   Remarques   : Le programme est capable d'éliminer une partie des doublons mais pas tous
+*                 Il n'est pas capable de différencier a+b de b+a ou a-b de b-a
 *
 *
 *   Tux Mathador is free software: you can redistribute it and/or modify
