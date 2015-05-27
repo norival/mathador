@@ -50,7 +50,7 @@ using namespace std;
 
 /// Déclaration des variables globales ///
 
-int i, j, k, n,                         //Compteurs
+int i, j, k,                            //Compteurs
     reponse;                            //Réponse de l'utilisateur pour le mode de jeu
 
 float desCible[2],                      //Tableau stockant les résultats des dés cibles
@@ -60,6 +60,7 @@ float desCible[2],                      //Tableau stockant les résultats des d�
 
 long double nMathador = 0,              //Nombre de solutions Mathador pour un tirage
     nSimulationsMathador = 0,           //Nombre de simulations avec au moins une solution Mathador (Mode simulation seulement)
+    n,                                  //Numéro de la simulation en cours
     nSolutions = 0,                     //Nombre de solutions
     nSimulations = 0,                   //Nombre de simulations (Mode simulation seulement)
     nPositives = 0,                     //Nombre de simulations positives (Mode simulation seulement)
@@ -270,7 +271,7 @@ void comptagePoints(string result)
     bool multiplication = false;
     bool division = false;
 
-    for (int l = 0; l < result.size(); l++)
+    for (unsigned int l = 0; l < result.size(); l++)
     {
         switch (result[l])
         {
@@ -318,7 +319,7 @@ void affichageResultats()
     {
         dejaAffiche1 = false;
         dejaAffiche2 = false;
-        for (int ll = 0; ll < solutions.size(); ll++)
+        for (unsigned int ll = 0; ll < solutions.size(); ll++)
         {
             if (nPoints[ll] == l)
             {
@@ -379,7 +380,7 @@ void stockageSolution(string solution)
     solution += static_cast<ostringstream*>( &(ostringstream() << cible) )->str();
 
     /// Vérification si la solution existe déjà dans le tableau 'solutions' ///
-    for (int jj = 0; jj < solutions.size(); jj++)
+    for (unsigned int jj = 0; jj < solutions.size(); jj++)
     {
         if (solution == solutions[jj])
         {
